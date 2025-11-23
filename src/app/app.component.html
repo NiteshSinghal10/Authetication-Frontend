@@ -1,6 +1,28 @@
-<h1 class="text-3xl font-bold underline text-red-300">
-  Hello world!
-</h1>
+<div class="flex justify-center items-center h-screen">
+  <div class="w-[35vw] border-0 rounded-lg flex flex-col items-center p-3 gap-6 shadow-2xl">
+      <!-- logo  -->
+       <img src="logo.png" alt="Vibely Logo" class="w-24 h-24">
+
+      <!-- Heading  -->
+      <div>
+        <div class="text-lg font-semibold text-gray-400">Welcome Back</div>
+        <div class="text-primary text-3xl font-extrabold">Vibely Authentication Service</div>
+        <div>Securely Access Your Vibe.</div>
+      </div>
+
+      <!-- Seperator line  -->
+      <div class="w-full border border-light-gray"></div>
+
+      <!-- Google Button  -->
+      <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=1047484772005-2d8ekhh9ehcabiur6tordtqtfu1nlnig.apps.googleusercontent.com&redirect_uri=http://localhost:4200&response_type=code&scope=openid%20email%20profile%20https://www.googleapis.com/auth/user.gender.read&access_type=offline&prompt=consent"
+      target="_blank" >
+        <button class="shadow-md flex items-center border-0 gap-2 bg-white  py-2 px-4 rounded-lg cursor-pointer hover:bg-gray-100 hover:shadow-sm transition duration-200">
+          <img src="google-logo-50.png" alt="Google Logo" class="w-8 h-8">
+          <span class="text-lg font-semibold text-dark-gray">Continue with Google</span>
+        </button>
+      </a>
+  </div>
+</div>
 
 
 <router-outlet />
