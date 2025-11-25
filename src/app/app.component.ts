@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
       const code = params.get('code');
 
       if (code) {
-        this.loginService.codeExchange(String(code), 'Nitesh.com', 'WEB');
+        this.loginService.codeExchange(String(code), 'Nitesh.com', 'WEB').subscribe(res => console.log("step 2:", res));
       }
     });
   }
