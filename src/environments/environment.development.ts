@@ -1,4 +1,4 @@
 export const environment = {
   environment: 'STAGING',
-  baseUrl: 'http://localhost:3002/api/v1',
+  baseUrl: 'https://api.vib3ly.shop/auth/api/v1',
 };

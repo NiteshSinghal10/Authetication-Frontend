@@ -90,7 +90,7 @@ jobs:
             npm ci
 
             echo "Building project..."
-            npm run build -- --configuration production
+            npm run build -- --configuration development
 
             echo "Removing Old dist"
             rm -r  ~/../../var/www/vib3ly/dist/
