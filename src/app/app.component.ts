@@ -9,7 +9,7 @@ import { LoginService } from '../app/services';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-  title = environment.environment;
+  googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=1047484772005-2d8ekhh9ehcabiur6tordtqtfu1nlnig.apps.googleusercontent.com&redirect_uri=${environment.frontendBaseUrl}&response_type=code&scope=openid%20email%20profile%20https://www.googleapis.com/auth/user.gender.read&https://www.googleapis.com/auth/user.birthday.read&access_type=offline&prompt=consent`;
 
   constructor (
     private loginService: LoginService,
