@@ -96,5 +96,5 @@ jobs:
             rm -r  ~/../../var/www/vib3ly/dist/
 
             echo "Copy dist to var/www/vib3ly/"
-            cp -r dist/ ~/../../var/www/vib3ly/dist/
+            mv -r dist/ ~/../../var/www/vib3ly/dist/
           EOF
