@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, ActivatedRoute, Router } from '@angular/router';
+import { RouterOutlet, ActivatedRoute } from '@angular/router';
 
 import { environment } from '../environments/environment';
 import { LoginService } from '../app/services';
@@ -15,8 +15,7 @@ export class AppComponent implements OnInit {
 
   constructor (
     private loginService: LoginService,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
 
