@@ -1,5 +1,5 @@
 export const environment = {
   environment: 'STAGING',
-  baseUrl: 'https://api.vib3ly.shop/auth/api/v1',
-  frontendBaseUrl: 'https://app.vib3ly.shop'
+  baseUrl: 'http://localhost:3002/auth/api/v1',
+  frontendBaseUrl: 'http://localhost:4200'
 };
