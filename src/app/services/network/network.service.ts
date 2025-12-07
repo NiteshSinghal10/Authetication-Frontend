@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { IParams } from './network.types';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,24 @@ export class NetworkService {
     return `${this.baseUrl}${endpoint}`;
   }
 
+  private createParams(paramsQuery?: IParams): HttpParams  {
+    let params = new HttpParams();
+
+    if(paramsQuery) {
+      Object.keys(paramsQuery).forEach(key => {
+        if(Array.isArray(paramsQuery[key])) {
+          paramsQuery[key].forEach(value => {
+            params = params.append(key, value);
+          })
+        } else {
+          params = params.append(key, paramsQuery[key]);
+        }
+      })
+    }
+
+    return params;
+  }
+
   private getHeaders(token?: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -25,19 +44,19 @@ export class NetworkService {
     return headers;
   }
 
-  get<T>(endpoint: string, params?: HttpParams): Observable<T> {
-    return this.http.get<T>(this.getUrl(endpoint), { params, headers: this.getHeaders(), withCredentials: true });
+  get<T>(endpoint: string, paramsQuery?: IParams): Observable<T> {
+    return this.http.get<T>(this.getUrl(endpoint), { params: this.createParams(paramsQuery), headers: this.getHeaders(), withCredentials: true });
   }
 
-  post<T>(endpoint: string, body: any, params?: HttpParams): Observable<T> {
-    return this.http.post<T>(this.getUrl(endpoint), body, { params, headers: this.getHeaders(), withCredentials: true });
+  post<T>(endpoint: string, body: any, paramsQuery?: IParams): Observable<T> {
+    return this.http.post<T>(this.getUrl(endpoint), body, { params: this.createParams(paramsQuery), headers: this.getHeaders(), withCredentials: true });
   }
 
-  put<T>(endpoint: string, body: any, params?: HttpParams): Observable<T> {
-    return this.http.put<T>(this.getUrl(endpoint), body, { params, headers: this.getHeaders(), withCredentials: true });
+  put<T>(endpoint: string, body: any, paramsQuery?: IParams): Observable<T> {
+    return this.http.put<T>(this.getUrl(endpoint), body, { params: this.createParams(paramsQuery), headers: this.getHeaders(), withCredentials: true });
   }
 
-  delete<T>(endpoint: string, body: any ,params?: HttpParams): Observable<T> {
-    return this.http.delete<T>(this.getUrl(endpoint), { params, headers: this.getHeaders(), body, withCredentials: true});
+  delete<T>(endpoint: string, body: any ,paramsQuery?: IParams): Observable<T> {
+    return this.http.delete<T>(this.getUrl(endpoint), { params: this.createParams(paramsQuery), headers: this.getHeaders(), body, withCredentials: true});
   }
 }

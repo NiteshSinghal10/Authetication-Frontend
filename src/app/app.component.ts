@@ -28,9 +28,7 @@ export class AppComponent implements OnInit {
 
       if (code) {
         this.loginService.codeExchange(String(code), aud, deviceType).subscribe(res => {
-          if(redirectUri) {
-            window.location.assign(redirectUri)
-          }
+          console.log("res")
         });
       }
     });
