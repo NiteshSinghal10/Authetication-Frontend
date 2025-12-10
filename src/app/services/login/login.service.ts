@@ -9,6 +9,6 @@ export class LoginService {
   constructor(private networkService: NetworkService) { }
 
   codeExchange(code: string, aud: string, deviceType: 'ANDROID' | 'IOS' | 'WEB') {
-    return this.networkService.get('/auth/token', { code, aud, deviceType })
+    return this.networkService.get('/auth/api/v1/auth/token', { code, aud, deviceType })
   }
 }
