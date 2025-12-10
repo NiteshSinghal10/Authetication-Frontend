@@ -32,8 +32,8 @@ export class AppComponent implements OnInit {
       console.log("step 1:", code, "Step 2:", state)
       if (code && state) {
         console.log("step 3")
-        this.loginService.codeExchange(String(code), aud, deviceType).subscribe(async (res) => {
-          const stateObj = await JSON.parse(state);
+        this.loginService.codeExchange(String(code), aud, deviceType).subscribe((res) => {
+          const stateObj = JSON.parse(state);
 
           window.location.href = stateObj.redirectUrl;
         });
