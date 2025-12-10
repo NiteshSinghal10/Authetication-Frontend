@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
         this.loginService.codeExchange(String(code), aud, deviceType).subscribe((res) => {
           const stateObj = JSON.parse(state);
 
-          window.location.href = stateObj.redirectUrl;
+          // window.location.href = stateObj.redirectUrl;
         });
       }
     });
