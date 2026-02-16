@@ -57,4 +57,4 @@ jobs:
 
       - name: Run deployment over Cloudflare SSH
         run: |
-          scp -r -i ~/key/mykey.pem -o StrictHostKeyChecking=no ./dist/* ec2-user@api.truewaysindia.com:/home/ec2-user/Desktop/vibely/frontend/Authetication-Frontend
+          scp -r -i ~/key/mykey.pem -o StrictHostKeyChecking=no ./dist/* ec2-user@api.truewaysindia.com:/var/www
