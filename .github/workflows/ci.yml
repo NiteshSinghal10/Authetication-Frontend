@@ -33,6 +33,7 @@ jobs:
         with:
           name: build-artifact
           path: ./dist
+          retention-days: 1
 
   deploy:
     name: Deploy to server
@@ -56,19 +57,4 @@ jobs:
 
       - name: Run deployment over Cloudflare SSH
         run: |
-          scp -r -i ~/key/mykey.pem -o StrictHostKeyChecking=no ./dist/* ec2-user@api.truewaysindia.com:/tmp/auth-frontend/
-
-          ssh -i ~/key/mykey.pem -o StrictHostKeyChecking=no ec2-user@api.truewaysindia.com << 'EOF'
-
-            echo "Current directory check:"
-            pwd
-
-            echo "Changing directory..."
-            cd Desktop/vibely/frontend/Authetication-Frontend
-
-            echo "Checking pwd:"
-            pwd
-
-            echo "Copy dist"
-            cp -r /tmp/auth-frontend/* ./
-          EOF
+          scp -r -i ~/key/mykey.pem -o StrictHostKeyChecking=no ./dist/* ec2-user@api.truewaysindia.com:/home/ec2-user/Desktop/vibely/frontend/Authetication-Frontend
