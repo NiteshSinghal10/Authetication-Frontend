@@ -23,10 +23,16 @@ jobs:
         run: npm install -g @angular/cli
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci 
 
       - name: Build production
         run: npm run build -- --configuration production
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: ./dist
 
   deploy:
     name: Deploy to server
@@ -34,12 +40,6 @@ jobs:
     needs: build-test
 
     steps:
-      - name: Install cloudflared
-        run: |
-          wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O cloudflared
-          sudo mv cloudflared /usr/local/bin/cloudflared
-          sudo chmod +x /usr/local/bin/cloudflared
-
       - name: Set up SSH key
         env:
           SSH_PRIVATE_KEY: ${{ vars.SERVER_KEY }}
@@ -48,30 +48,17 @@ jobs:
           echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/key/mykey.pem
           chmod 600 ~/key/mykey.pem
 
-      - name: Debug SSH Key
-        run: |
-          echo "Checking if key file exists..."
-          ls -la ~/key/mykey.pem
-
-          echo "Checking file permissions..."
-          stat ~/key/mykey.pem
-
-          echo "Checking file size..."
-          wc -c ~/key/mykey.pem
-
-          echo "Checking key format (first/last lines)..."
-          head -n 1 ~/key/mykey.pem
-          tail -n 1 ~/key/mykey.pem
-
-          echo "Validating key..."
-          ssh-keygen -l -f ~/key/mykey.pem || echo "Key validation failed!"
-
-          echo "Checking for whitespace issues..."
-          file ~/key/mykey.pem
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./dist
 
       - name: Run deployment over Cloudflare SSH
         run: |
-          ssh -i ~/key/mykey.pem -o StrictHostKeyChecking=no -o ProxyCommand="cloudflared access ssh --hostname ssh.vib3ly.shop" nitesh@ssh.vib3ly.shop << 'EOF'
+          scp -r -i ~/key/mykey.pem -o StrictHostKeyChecking=no ./dist/* ec2-user@api.truewaysindia.com:/tmp/dist/
+
+          ssh -i ~/key/mykey.pem -o StrictHostKeyChecking=no ec2-user@api.truewaysindia.com << 'EOF'
 
             echo "Current directory check:"
             pwd
@@ -82,19 +69,6 @@ jobs:
             echo "Checking pwd:"
             pwd
 
-            echo "Checking out staging branch..."
-            git checkout staging
-            git pull origin staging
-
-            echo "Installing dependencies..."
-            npm ci
-
-            echo "Building project..."
-            npm run build -- --configuration production
-
-            echo "Removing Old dist"
-            rm -r  ~/../../var/www/vib3ly-auth/dist/
-
-            echo "Copy dist to var/www/vib3ly-auth/"
-            mv dist/ ~/../../var/www/vib3ly-auth/dist/
+            echo "Copy dist"
+            cp -r /tmp/dist/* ./
           EOF
