@@ -62,6 +62,8 @@ export class AppComponent implements OnInit {
 
         const encodedState = encodeURIComponent(JSON.stringify(stateData));
 
+        console.log("----Frontend Base Url----", environment.frontendBaseUrl);
+
         const googleUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=1047484772005-2d8ekhh9ehcabiur6tordtqtfu1nlnig.apps.googleusercontent.com&redirect_uri=${environment.frontendBaseUrl}&response_type=code&scope=openid%20email%20profile%20https://www.googleapis.com/auth/user.gender.read%20https://www.googleapis.com/auth/user.birthday.read&access_type=offline&prompt=consent&state=${encodedState}`;
         this.googleAuthUrl = googleUrl;
       }
