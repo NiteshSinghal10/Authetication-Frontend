@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
+      console.log("params:", params);
       const code = params.get('code');
       const aud = params.get('aud') ?? this.aud;
       const deviceType: 'WEB' | 'ANDROID' | 'IOS' = (params.get('deviceType') as 'WEB' | 'ANDROID' | 'IOS' | null) ?? this.deviceType;
